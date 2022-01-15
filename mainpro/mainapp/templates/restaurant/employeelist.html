@@ -1,0 +1,42 @@
+{% extends "restaurant/restaurentbase.html" %}
+<br>
+<br>
+{% block content %}
+
+<form action="" method="POST">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    {% csrf_token %}
+    <input type="text" name="adrs" placeholder="Enter location">
+    <input type="submit" value="search">
+
+
+    <h4>EMPLOYEE LIST</h4>
+    <table border="" >
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+        {% for e in listemployee %}
+        <tr>
+            <td>{{e.name}}</td>
+            <td>{{e.address}}</td>
+            <td>{{e.phone}}</td>
+            <td>{{e.email}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "ngo/ngobase.html"%}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+
+
+  <h4><b>NGO List</b></h4>
+<table border="">
+  <tr>
+    <th>name</th>
+    <th>institutionname</th>
+    <th>address</th>
+    <th>postcode</th>
+    <th>phone</th>
+    <th>Email</th>
+
+  </tr>
+  {% for n in form %}
+  <tr>
+    <td>{{n.name}}</td>
+    <td>{{n.institution_name}}</td>
+    <td>{{n.address}}</td>
+    <td>{{n.postcode}}</td>
+    <td>{{n.phone}}
+    <td>{{n.email}}</td>
+    <form action="/update_ngo/" method="post">
+      {% csrf_token%}
+        <td><input type="number" value="{{r.id}}"hidden >
+        <td><input type="submit" value="update"></td >
+    </form>
+  </tr>
+  {% endfor %}
+</table>
+  <br>
+  <br>
+
+  <a href="/employee_list/" class="btn btn-warning" type="submit">employee list</a>
+
+  <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+{% endblock %}

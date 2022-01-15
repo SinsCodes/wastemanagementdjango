@@ -1,0 +1,59 @@
+{% extends "restaurant/restaurentbase.html"%}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="adrs" placeholder="Enter location">
+    <input type="submit" value="search">
+    </form>
+
+
+    <br>
+    <br>
+    <h4><b>NGO List</b></h4>
+<table border=""class="w-50 table table-light" style="border-radius:10px;background-color:#FFFF99;">
+  <tr>
+    <th>name</th>
+    <th>institutionname</th>
+    <th>address</th>
+    <th>postcode</th>
+    <th>phone</th>
+    <th>email</th>
+
+  </tr>
+
+  {% for n in listngo %}
+
+  <tr>
+    <td>{{n.name}}</td>
+    <td>{{n.institution_name}}</td>
+    <td>{{n.address}}</td>
+    <td>{{n.postcode}}</td>
+    <td>{{n.phone}}</td>
+    <td>{{n.email}}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+<form action="/send_email/" method="post ">
+    {% csrf_token %}
+<table>
+        <tr><th>subject</th><td><input type="text" name="sub" ></td></tr>
+        <tr><th>message</th><td><input type="text" name="msg" ></td></tr>
+
+<!--    {% for n in listngo %}-->
+    <input type="text" value="{{n.id}}"name="nid"hidden>
+    <input type="text" value="{{n.email}}"name="nemail" hidden>
+<!--    {% endfor %}-->
+</table>
+    <input class="btn btn-warning" type="submit"value="sendemail">
+
+</form>
+
+{% endblock %}

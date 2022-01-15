@@ -1,0 +1,44 @@
+{% extends "restaurant/restaurentbase.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+
+    <h4><b>Restaurants List</b></h4>
+     <form action="" method="POST">
+     {% csrf_token %}
+     <input type="number" name="rid" placeholder="Enter id to update">
+     <input type="submit" value="search">
+     </form>
+    <table border="">
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Registration_number</th>
+      <th>Email</th>
+
+    </tr>
+    {% for r in form %}
+    <tr>
+      <td>{{r.name}}</td>
+      <td>{{r.address}}</td>
+      <td>{{r.phone}}</td>
+      <td>{{r.registration_number}}</td>
+      <td>{{r.email}}</td>
+    </tr>
+        
+    {% endfor %}
+    </table>
+
+    <a href="/update_email/" class="btn btn-warning" type="submit">update email</a>
+
+</div>
+<br>
+<br>
+{% endblock %}

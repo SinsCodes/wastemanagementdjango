@@ -1,0 +1,58 @@
+{% extends "restaurant/restaurentbase.html"%}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="adrs" placeholder="Enter location">
+    <input type="submit" value="search">
+
+  </form>
+
+  <h4><b>NGO List</b></h4>
+<table border=""class="w-50 table table-light" style="border-radius:10px;background-color:#FFFF99;">
+  <tr>
+    <th>name</th>
+    <th>institutionname</th>
+    <th>address</th>
+    <th>postcode</th>
+    <th>phone</th>
+    <th>email</th>
+
+  </tr>
+
+  {% for n in listngo %}
+
+  <tr>
+    <td>{{n.name}}</td>
+    <td>{{n.institution_name}}</td>
+    <td>{{n.address}}</td>
+    <td>{{n.postcode}}</td>
+    <td>{{n.phone}}</td>
+    <td>{{n.email}}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+  <br>
+  <br>
+
+  <a href="/employee_list/" class="btn btn-warning" type="submit">employee list</a>
+  <a href="/ngo_email/" class="btn btn-warning" type="submit">email</a>
+
+
+
+  <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+{% endblock %}

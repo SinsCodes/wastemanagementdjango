@@ -1,0 +1,36 @@
+{% extends "ngo/ngobase.html" %}
+
+{% block title %}
+REGISTRATION PAGE
+{% endblock %}
+{% block content %}
+<div class="container">
+
+	<br>
+	<br>
+	<br>
+	<center><span>REGISTRATION FORM</span ></center>
+		<form action="/add_ngo/" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+				<table>
+					<tr><th>First Name</th><td><input type="text" name="fname"></td></tr>
+					<tr><th>Postcode</th><td><input type="number" name="pcode"></td></tr>
+					<tr><th>Institution</th><td><input type="text" name="insti"></td></tr>
+					<tr><th>Address</th><td><input type="text" name="add"></td></tr>
+					<tr><th>Phone</th><td><input type="number" name="phone"></td></tr>
+					<tr><th>Email</th><td><input type="email" name="email"></td></tr>
+					<tr><th>Username</th><td><input type="text" name="user"></td></tr>
+					<tr><th>Password</th><td><input type="password" name="pwd"></td></tr>
+					<tr><th>Images</th><td><input type="file" name="pic"></td></tr>
+					<tr><th>Docs</th><td><input type="file" name="docs"></td></tr>
+				</table>
+				<br>
+				<br>
+				<input class="btn btn-warning" type="submit" value="add">
+				<a href="/list_rest/" class="btn btn-warning" type="submit">restlist</a>
+			    <a href="/update_ngo/" class="btn btn-warning" type="submit">ngolist</a>
+		</form>
+</div>
+
+
+{% endblock %}

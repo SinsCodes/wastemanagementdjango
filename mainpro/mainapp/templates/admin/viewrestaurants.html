@@ -1,0 +1,39 @@
+{% extends "admin/adminbase.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+
+<table border="">
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Registration_number</th>
+  </tr>
+  {% for r in res %}
+  <tr>
+    <td>{{r.name}}</td>
+    <td>{{r.address}}</td>
+    <td>{{r.phone}}</td>
+    <td>{{r.registration_number}}</td>
+
+    <form action="/del_rest/" method="post">
+      {% csrf_token %}
+      <td><input type="number" value="{{r.id}}" name="rid">
+      <td><input type="submit" value="delete">
+      </td>
+
+    </form>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+<br>
+<br>
+{% endblock %}

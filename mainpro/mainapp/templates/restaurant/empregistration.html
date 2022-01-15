@@ -1,0 +1,24 @@
+{% extends "restaurant/restaurentbase.html" %}
+<br>
+<br>
+<br>
+<br>
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+<form action="/employee_add/" method="POST">
+
+  {% csrf_token %}
+
+     {{form.as_p}}
+
+  <input class="btn btn-warning" type="submit" value="add">
+</form>
+</div>
+
+{% endblock %}

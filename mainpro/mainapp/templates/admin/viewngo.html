@@ -1,0 +1,43 @@
+{% extends "admin/adminbase.html"%}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+<table border="">
+  <tr>
+    <th>name</th>
+    <th>institutionname</th>
+    <th>address</th>
+    <th>postcode</th>
+    <th>phone</th>
+
+  </tr>
+  {% for n in ngo %}
+  <tr>
+    <td>{{n.name}}</td>
+    <td>{{n.institution_name}}</td>
+    <td>{{n.address}}</td>
+    <td>{{n.postcode}}</td>
+    <td>{{n.phone}}</td>
+    <form action="/del_ngo/" method="post">
+      {% csrf_token%}
+      <td><input type="number" value="{{n.id}}" name="nid">
+      <td><input type="submit" value="delete">
+      </td>
+
+    </form>
+  </tr>
+  {% endfor %}
+</table>
+  <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+{% endblock %}

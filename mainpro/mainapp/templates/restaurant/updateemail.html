@@ -1,0 +1,28 @@
+{% extends "restaurant/restaurentbase.html" %}
+
+{% block title %}
+REGISTRATION PAGE
+{% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+	<br>
+	<br>
+	<br>
+	<center><h2 >REGISTRATION FORM</h2></center>
+	<form action="/update_email/" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<table>
+
+            <tr><th>id</th><td><input type="number" name="rid"></td></tr>
+			<tr><th>phone</th><td><input type="number" name="phone"></td></tr>
+			<tr><th>Email</th><td><input type="email" name="email"></td></tr>
+		</table>
+		 <input class="btn btn-warning" type="submit" value="add">
+
+	</form>
+
+</div>
+{% endblock %}
