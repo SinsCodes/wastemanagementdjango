@@ -6,7 +6,7 @@
 <br>
 <br>
 <br>
-
+<div class="container"style="border-radius:10px;background-color:#FFD872;">
     <form action="" method="POST">
     {% csrf_token %}
     <input type="text" name="adrs" placeholder="Enter location">
@@ -17,7 +17,7 @@
     <br>
     <br>
     <h4><b>NGO List</b></h4>
-<table border=""class="w-50 table table-light" style="border-radius:10px;background-color:#FFFF99;">
+<table border="" class="w-50 table table-light" style="border-radius:10px;background-color:#F2D4CC;">
   <tr>
     <th>name</th>
     <th>institutionname</th>
@@ -46,11 +46,7 @@
 <table>
         <tr><th>subject</th><td><input type="text" name="sub" ></td></tr>
         <tr><th>message</th><td><input type="text" name="msg" ></td></tr>
-
-<!--    {% for n in listngo %}-->
-    <input type="text" value="{{n.id}}"name="nid"hidden>
-    <input type="text" value="{{n.email}}"name="nemail" hidden>
-<!--    {% endfor %}-->
+        <tr><th><input type="text" value="{{loc}}"name="adrs"hidden></tr></th>
 </table>
     <input class="btn btn-warning" type="submit"value="sendemail">
 

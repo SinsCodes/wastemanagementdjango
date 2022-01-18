@@ -33,7 +33,16 @@
     </tr>
     {% endfor %}
     </table>
-      <a href="/rest_email/" class="btn btn-warning" type="submit">email</a>
+    <form action="/send_restemail/" method="post ">
+    {% csrf_token %}
+<table>
+        <tr><th>subject</th><td><input type="text" name="sub" ></td></tr>
+        <tr><th>message</th><td><input type="text" name="msg" ></td></tr>
+        <tr><th><input type="text" value="{{loc}}"name="adrs"hidden></tr></th>
+</table>
+    <input class="btn btn-warning" type="submit"value="sendemail">
+
+</form>
 </div>
 <br>
 <br>

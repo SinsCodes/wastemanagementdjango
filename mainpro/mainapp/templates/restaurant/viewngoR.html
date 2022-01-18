@@ -6,9 +6,9 @@
 <br>
 <br>
 <br>
-<div class="container">
+<div class="container"style="border-radius:10px;background-color:#FFD872;">
 
-  <form action="" method="POST">
+  <form action="" method="POST" >
     {% csrf_token %}
     <input type="text" name="adrs" placeholder="Enter location">
     <input type="submit" value="search">
@@ -16,7 +16,7 @@
   </form>
 
   <h4><b>NGO List</b></h4>
-<table border=""class="w-50 table table-light" style="border-radius:10px;background-color:#FFFF99;">
+<table border="" class="w-50 table table-light"  class="w-50 table table-light" style="border-radius:10px;background-color:#F2D4CC;">
   <tr>
     <th>name</th>
     <th>institutionname</th>
@@ -43,7 +43,7 @@
   <br>
   <br>
 
-  <a href="/employee_list/" class="btn btn-warning" type="submit">employee list</a>
+
   <a href="/ngo_email/" class="btn btn-warning" type="submit">email</a>
 
 

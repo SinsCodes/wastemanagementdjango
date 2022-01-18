@@ -1,9 +1,10 @@
+
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
-from django.http import HttpResponse
-from django.shortcuts import render
 
-from mainpro.settings import EMAIL_HOST_USER
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+
 from .forms import RestForm, EmployeeForm
 
 
@@ -82,6 +83,14 @@ def update_res(request):
 
 
 def update_ngo(request):
+    # if request.method == 'POST':
+    #     obj = Rest_Reg.objects.filter(id=request.POST.get('nid'))
+    #     return render(request, 'ngo/view.html', {'form': obj})
+    #
+    # obj1 = Rest_Reg.objects.all()
+    #
+    # return render(request, 'restaurant/viewrestaurants.html', {'form': obj1})
+
     return render(request,'ngo/updatengo.html')
 
 
@@ -94,21 +103,13 @@ def view_rest(request):
 
 
 def list_ngo(request):
-
-
-
     if request.method == 'POST':
         obj=Ngo_Reg.objects.filter(address=request.POST.get('adrs'))
-
 
         return render(request,'restaurant/viewngoR.html',{'listngo':obj})
     obj4=Ngo_Reg.objects.all()
 
-
     return render(request, 'restaurant/viewngoR.html',{'listngo':obj4})
-
-
-
 
 
 def delete_resdata(request):
@@ -166,40 +167,27 @@ def add_ngo(request):
 
 
 
-def send_email(request):
-    if request.method == 'POST':
-        print('one')
+
+def send_emailngo(request):
+    if request.method=='POST':
 
         subject=request.POST.get('sub')
-        # message=request.POST.get('msg')
-        #
-        print(subject)
-        # print(message)
-        # id=request.POST.get('nid')
-        # print(id)
-        # recepient = request.POST.get('nemail')USER)
-        #
-        #         # for e in recepient:
-        #         #     print(email=e)
-        # # print(id)
-        # print('two')
-        # print(recepient)
-        # print('one')
-        # print(EMAIL_HOST_
-        #     send_mail(message,subject,EMAIL_HOST_USER,[e],
-        #               fail_silently= False)
+        message=request.POST.get('msg')
+        loc=request.POST.get('adrs')
+        print(loc)
 
-    return render(request,'restaurant/ngoemail.html')
+        ngo_obj=Ngo_Reg.objects.filter(address=request.POST.get('adrs'))
 
-
-
-        #     list=[]
-        # obj=Ngo_Reg(email=request.POST.get('email'))
-        # list.append(obj)
-
-    # return render(request, 'restaurant/ngoemail.html')
-
-
+        for ngo in ngo_obj:
+            res=str(ngo.email)
+            print(res)
+        obj=Rest_Reg.objects.get(username=request.session['sid'])
+        from_mail='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
+        msg='hai {}'.format(ngo.name)+'\n'+message+'\n'+from_mail
+        send_mail(subject,msg,'developsini@gmail.com',[res],fail_silently=False)
+        from_mail=msg=""
+        return render(request, 'restaurant/ngoemail.html')
+    return render(request, 'restaurant/ngoemail.html')
 
 def ngo_email(request):
 
@@ -215,21 +203,42 @@ def ngo_email(request):
 
     return render(request, 'restaurant/ngoemail.html')
 
-        
-        # email=request.POST.get("email")
-        # message=request.POST.get("msg")
-        # subject= request.POST.get("sub")
-        # print(email,subject,message)
+def rest_email(request):
 
+    if request.method=='POST':
 
+        obj=Rest_Reg.objects.filter(address=request.POST.get('adrs'))
+        return render(request,'ngo/emailtorest.html',{'listrest':obj})
 
+        obj3=Rest_Reg.objects.all()
+        return render(request,'ngo/emailtorest.html',{'listrest':obj3})
+    return render(request, 'ngo/emailtorest.html')
 
+def send_emailrest(request):
 
-    # send_mail('hello from developsini',
-    #           'hello there,this is an automated message',
-    #           'developssini@gmail.com',
-    #           ['siniabraham1989@gmail.com','peyushzach@gmail.com','zachpeyush@gmail.com'],
-    #           fail_silently=False)
+    if request.method=='POST':
+
+        subject=request.POST.get('sub')
+        message=request.POST.get('msg')
+        loc=request.POST.get('adrs')
+        print(loc)
+
+        rest_obj=Rest_Reg.objects.filter(address=request.POST.get('adrs'))
+
+        for rest in rest_obj:
+            rec=str(rest.email)
+
+            obj=Ngo_Reg.objects.get(username=request.session['sid'])
+
+            fromemail='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
+
+            msg='hai{}'.format(rest.name)+'\n'+message+'\n'+fromemail
+
+            # send_mail(subject,msg,EMAIL_HOST_USER,[rec],fail_silently= False)
+
+        return render(request,'ngo/emailtorest.html')
+
+    return render(request,'ngo/emailtorest.html')
 
 
 def view_ngo(request):
@@ -278,8 +287,30 @@ def employee_list(request):
 
     return render(request,'restaurant/employeelist.html',{'listemployee':obj})
 
+def send_emailemp(request):
+    if request.method=='POST':
 
+        subject=request.POST.get('sub')
+        message=request.POST.get('msg')
+        loc=request.POST.get('adrs')
+        print(loc)
 
+        emp_obj=Employee.objects.filter(address=request.POST.get('adrs'))
+
+        for emp in emp_obj:
+            rec=str(emp.email)
+
+            obj=Ngo_Reg.objects.get(username=request.session['sid'])
+
+            fromemail='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
+
+            msg='hai{}'.format(emp.name)+'\n'+message+'\n'+fromemail
+
+            # send_mail(subject,msg,EMAIL_HOST_USER,[rec],fail_silently= False)
+
+        return render(request,'restaurant/emp_email.html')
+
+    return render(request,'restaurant/emp_email.html')
 
 def del_ngodata(request):
 
@@ -299,10 +330,6 @@ def logout_ngo(request):
 
     except:
         return render(request, 'index.html')
-
-
-
-
 
 
 
@@ -350,7 +377,7 @@ def index_login(request):
                     if pd == r.password:
                         request.session['sid'] = r.username
 
-                        return list_ngo(request)
+                        return redirect ('/list_ngo/')
 
                     else:
 
@@ -367,7 +394,7 @@ def index_login(request):
 
                     if pd == n.password:
                         request.session['sid'] = n.username
-                        return list_rest(request)
+                        return redirect('/list_rest/')
 
                     else:
                         return HttpResponse ('incorrect password')
