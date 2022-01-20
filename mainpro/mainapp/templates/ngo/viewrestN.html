@@ -23,6 +23,7 @@
       <th>Address</th>
       <th>Phone</th>
       <th>Registration_number</th>
+      <th>Email</th>
     </tr>
     {% for r in listrest %}
     <tr>
@@ -30,10 +31,12 @@
       <td>{{r.address}}</td>
       <td>{{r.phone}}</td>
       <td>{{r.registration_number}}</td>
+      <td>{{r.email}}</td>
     </tr>
     {% endfor %}
     </table>
       <a href="/rest_email/" class="btn btn-warning" type="submit">email</a>
+      <a href="/employee_list/" class="btn btn-warning" type="submit">employee list</a>
 </div>
 <br>
 <br>

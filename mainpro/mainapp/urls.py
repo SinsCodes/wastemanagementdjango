@@ -25,6 +25,7 @@ urlpatterns = [
     path('employee_add/', views.employee_add),
     path('employee_reg/', views.employee_reg),
     path('employee_list/', views.employee_list),
+    path('emp_email/', views.emp_email),
     path('send_email/',views.send_emailngo),
     path('send_restemail/',views.send_emailrest),
     path('send_emailemp/', views.send_emailemp),

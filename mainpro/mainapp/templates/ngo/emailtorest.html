@@ -23,6 +23,7 @@
       <th>Address</th>
       <th>Phone</th>
       <th>Registration_number</th>
+      <th>Email</th>
     </tr>
     {% for r in listrest %}
     <tr>
@@ -30,15 +31,16 @@
       <td>{{r.address}}</td>
       <td>{{r.phone}}</td>
       <td>{{r.registration_number}}</td>
+      <td>{{r.email}}</td>
     </tr>
     {% endfor %}
     </table>
-    <form action="/send_restemail/" method="post ">
+    <form action="/send_restemail/" method="post">
     {% csrf_token %}
 <table>
-        <tr><th>subject</th><td><input type="text" name="sub" ></td></tr>
-        <tr><th>message</th><td><input type="text" name="msg" ></td></tr>
-        <tr><th><input type="text" value="{{loc}}"name="adrs"hidden></tr></th>
+        <tr><th>subject</th><td><input type="text" name="sub"></td></tr>
+        <tr><th>message</th><td><input type="text" name="msg"></td></tr>
+        <tr><th><input type="text" value="{{loc}}"name="adrs"></tr></th>
 </table>
     <input class="btn btn-warning" type="submit"value="sendemail">
 

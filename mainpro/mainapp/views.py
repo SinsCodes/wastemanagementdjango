@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+from mainpro.settings import EMAIL_HOST_USER
 from .forms import RestForm, EmployeeForm
 
 
@@ -112,17 +113,6 @@ def list_ngo(request):
     return render(request, 'restaurant/viewngoR.html',{'listngo':obj4})
 
 
-def delete_resdata(request):
-
-    dt = Rest_Reg.objects.all()
-
-    if request.method == 'POST':
-
-        Rest_Reg.objects.get(id=request.POST.get('rid')).delete()
-
-        return render(request,'admin/viewrestaurants.html',{'res': dt})
-
-    return render(request, 'admin/viewrestaurants.html',{'res': dt})
 
 def logout_res(request):
     try:
@@ -165,27 +155,33 @@ def add_ngo(request):
     return render(request,'ngo/ngoregistration.html')
 
 
-
-
-
 def send_emailngo(request):
-    if request.method=='POST':
+    print('one')
 
-        subject=request.POST.get('sub')
+    if request.method == 'POST':
+
+        print('two')
+        subject = request.POST.get('sub')
         message=request.POST.get('msg')
         loc=request.POST.get('adrs')
+        print(subject)
+        print(message)
         print(loc)
 
         ngo_obj=Ngo_Reg.objects.filter(address=request.POST.get('adrs'))
 
         for ngo in ngo_obj:
+
             res=str(ngo.email)
+
             print(res)
-        obj=Rest_Reg.objects.get(username=request.session['sid'])
-        from_mail='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
-        msg='hai {}'.format(ngo.name)+'\n'+message+'\n'+from_mail
-        send_mail(subject,msg,'developsini@gmail.com',[res],fail_silently=False)
-        from_mail=msg=""
+            
+            obj=Rest_Reg.objects.get(username=request.session['sid'])
+            from_mail='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
+            msg='hai {}'.format(ngo.name)+'\n'+message+'\n'+from_mail
+            send_mail(subject,msg,EMAIL_HOST_USER,[res],fail_silently=False)
+            from_mail=msg=""
+
         return render(request, 'restaurant/ngoemail.html')
     return render(request, 'restaurant/ngoemail.html')
 
@@ -195,7 +191,7 @@ def ngo_email(request):
 
         obj = Ngo_Reg.objects.filter(address=request.POST.get('adrs'))
 
-        return render(request, 'restaurant/ngoemail.html', {'listngo': obj})
+        return render(request, 'restaurant/ngoemail.html', {'listngo':obj,'loc':request.POST.get('adrs')})
 
         obj4 = Ngo_Reg.objects.all()
 
@@ -208,7 +204,7 @@ def rest_email(request):
     if request.method=='POST':
 
         obj=Rest_Reg.objects.filter(address=request.POST.get('adrs'))
-        return render(request,'ngo/emailtorest.html',{'listrest':obj})
+        return render(request,'ngo/emailtorest.html',{'listrest':obj,'loc':request.POST.get('adrs')})
 
         obj3=Rest_Reg.objects.all()
         return render(request,'ngo/emailtorest.html',{'listrest':obj3})
@@ -221,12 +217,16 @@ def send_emailrest(request):
         subject=request.POST.get('sub')
         message=request.POST.get('msg')
         loc=request.POST.get('adrs')
+        print(subject)
+        print(message)
         print(loc)
+
 
         rest_obj=Rest_Reg.objects.filter(address=request.POST.get('adrs'))
 
         for rest in rest_obj:
             rec=str(rest.email)
+            print(rec)
 
             obj=Ngo_Reg.objects.get(username=request.session['sid'])
 
@@ -234,12 +234,68 @@ def send_emailrest(request):
 
             msg='hai{}'.format(rest.name)+'\n'+message+'\n'+fromemail
 
-            # send_mail(subject,msg,EMAIL_HOST_USER,[rec],fail_silently= False)
+            send_mail(subject,msg,EMAIL_HOST_USER,[rec],fail_silently= False)
 
         return render(request,'ngo/emailtorest.html')
 
     return render(request,'ngo/emailtorest.html')
 
+
+def emp_email(request):
+
+
+    if request.method == 'POST':
+
+        obj1 = Employee.objects.filter(address=request.POST.get('adrs'))
+
+        return render(request, 'ngo/emp_email.html', {'listemployee': obj1,'loc': request.POST.get('adrs')})
+
+        obj = Employee.objects.all()
+
+        return render(request, 'ngo/emp_email.html', {'listemployee': obj})
+
+    return render(request, 'ngo/emp_email.html')
+
+
+def employee_list(request):
+
+    if request.method == 'POST':
+
+        obj1=Employee.objects.filter(address=request.POST.get('adrs'))
+
+        return render(request,'ngo/employeelist.html',{'listemployee':obj1})
+
+    obj=Employee.objects.all()
+
+    return render(request,'ngo/employeelist.html',{'listemployee':obj})
+
+def send_emailemp(request):
+    print('one')
+
+    if request.method == 'POST':
+        print('two')
+
+        subject=request.POST.get('sub')
+        message=request.POST.get('msg')
+        loc=request.POST.get('adrs')
+        print(loc)
+
+        emp_obj=Employee.objects.filter(address=request.POST.get('adrs'))
+
+        for emp in emp_obj:
+            rec = str(emp.email)
+
+            obj=Ngo_Reg.objects.get(username=request.session['sid'])
+
+            from_email='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
+
+            msg='hai{}'.format(emp.name)+'\n'+message+'\n'+from_email
+
+            send_mail(subject,msg,EMAIL_HOST_USER,[rec],fail_silently= False)
+
+        return render(request,'ngo/emp_email.html')
+
+    return render(request,'ngo/emp_email.html')
 
 def view_ngo(request):
 
@@ -262,7 +318,7 @@ def list_rest(request):
 def employee_reg(request):
 
     emp=EmployeeForm
-    return render(request,'restaurant/empregistration.html',{'form':emp})
+    return render(request,'ngo/empregistration.html',{'form':emp})
 
 
 def employee_add(request):
@@ -275,42 +331,10 @@ def employee_add(request):
                      email=request.POST.get('email'))
         emp.save()
     emp = EmployeeForm
-    return render(request,'restaurant/empregistration.html',{'form':emp})
+    return render(request,'ngo/empregistration.html',{'form':emp})
 
-def employee_list(request):
 
-    if request.method=='POST':
-        obj1=Employee.objects.filter(address=request.POST.get('adrs'))
-        return render(request,'restaurant/employeelist.html',{'listemployee':obj1})
 
-    obj=Employee.objects.all()
-
-    return render(request,'restaurant/employeelist.html',{'listemployee':obj})
-
-def send_emailemp(request):
-    if request.method=='POST':
-
-        subject=request.POST.get('sub')
-        message=request.POST.get('msg')
-        loc=request.POST.get('adrs')
-        print(loc)
-
-        emp_obj=Employee.objects.filter(address=request.POST.get('adrs'))
-
-        for emp in emp_obj:
-            rec=str(emp.email)
-
-            obj=Ngo_Reg.objects.get(username=request.session['sid'])
-
-            fromemail='Regards,\n{}\n{}\n{}'.format(obj.name,obj.email,obj.phone)
-
-            msg='hai{}'.format(emp.name)+'\n'+message+'\n'+fromemail
-
-            # send_mail(subject,msg,EMAIL_HOST_USER,[rec],fail_silently= False)
-
-        return render(request,'restaurant/emp_email.html')
-
-    return render(request,'restaurant/emp_email.html')
 
 def del_ngodata(request):
 
@@ -340,6 +364,20 @@ def admin_view(request):
 
 def rest_base(request):
     return render(request,'restaurant/restaurentbase.html')
+
+
+def delete_resdata(request):
+
+    dt = Rest_Reg.objects.all()
+
+    if request.method == 'POST':
+
+        Rest_Reg.objects.get(id=request.POST.get('rid')).delete()
+
+        return render(request,'admin/viewrestaurants.html',{'res': dt})
+
+    return render(request, 'admin/viewrestaurants.html',{'res': dt})
+
 
 
 def index_login(request):

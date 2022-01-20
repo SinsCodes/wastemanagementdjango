@@ -41,15 +41,15 @@
   </tr>
   {% endfor %}
 </table>
-<form action="/send_email/" method="post ">
+<form action="/send_email/" method="post">
     {% csrf_token %}
 <table>
-        <tr><th>subject</th><td><input type="text" name="sub" ></td></tr>
-        <tr><th>message</th><td><input type="text" name="msg" ></td></tr>
-        <tr><th><input type="text" value="{{loc}}"name="adrs"hidden></tr></th>
+        <tr><th>subject</th><td><input type="text" name="sub"></td></tr>
+        <tr><th>message</th><td><input type="text" name="msg"></td></tr>
+        <tr><th><input type="text" value="{{loc}}"name="adrs" hidden></tr></th>
 </table>
     <input class="btn btn-warning" type="submit"value="sendemail">
 
 </form>
-
+</div>
 {% endblock %}
